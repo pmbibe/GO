@@ -29,18 +29,22 @@ func reverse(n int) int {
 	return m
 }
 
-func main() {
+func symmetricPrime(n int) int {
 	count := 0
-
-	for n := 1; n < 300; n++ {
-		if KiemtraNT(n) == 1 && KiemtraNT(reverse(n)) == 1 {
+	for m := 1; ; m++ {
+		if KiemtraNT(m) == 1 && KiemtraNT(reverse(m)) == 1 && m == reverse(m) {
 			count++
-			if count == 1 {
-				fmt.Print(n)
+			if count == n {
+				return m
 			}
 
 		}
 
 	}
+	return 0
+}
+func main() {
+
+	fmt.Print(symmetricPrime(300))
 
 }
