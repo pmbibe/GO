@@ -7,15 +7,19 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type Node struct {
-	name  string
-	fdqn  string
-	ipv4  string
-	ip_v4 string
+//NodeLevel0 OK
+type NodeLevel0 struct {
+	Node map[string]string
 }
-type Nodes struct {
-	name string
+
+//NodeLevel OK
+type NodeLevel struct {
+	Node map[string]map[string]string `yaml:"node"`
 }
+
+// type NodeLevel1 struct {
+// 	Node map[string]string
+// }
 
 var data = `
 node:
@@ -34,11 +38,28 @@ node:
 `
 
 func main() {
-	var b Nodes
+	var b NodeLevel
+	// var d []byte
 	err := yaml.Unmarshal([]byte(data), &b)
 	if err != nil {
 		log.Fatalf("cannot unmarshal data: %v", err)
 	}
-	fmt.Printf("%#v\n", b)
+
+	keys := make([]string, 0, len(b.Node))
+	values := make([]map[string]string, 0, len(b.Node))
+
+	for k, v := range b.Node {
+		keys = append(keys, k)
+		values = append(values, v)
+		fmt.Print(k)
+		fmt.Print("\n")
+		fmt.Print(b.Node[k])
+		fmt.Print("\n")
+	}
+	// fmt.Print(keys)
+	// fmt.Print(values)
+	// for i in keys {
+	// 	fmt.Print(b.Node["nodeA"])
+	// }
 
 }
